@@ -14,7 +14,7 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return '<h1>trang chu</h1>';
 });
 
 Auth::routes();
