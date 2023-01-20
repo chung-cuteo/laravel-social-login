@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/auth/facebook', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('auth/facebook/callback', function () {
+    return 'callback facebook';
+});
