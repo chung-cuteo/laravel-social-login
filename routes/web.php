@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,42 +17,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/auth/facebook', function () {
-    return Socialite::driver('facebook')->redirect();
-});
+Auth::routes();
 
-Route::get('auth/facebook/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-    echo $user->getId().'<br>';
-    echo $user->getNickname().'<br>';
-    echo $user->getName().'<br>';
-    echo $user->getEmail().'<br>';
-    echo $user->getAvatar().'<br>';
-});
 
-Route::get('/auth/google', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::prefix('auth')->name('auth.')->group(function () {
 
-Route::get('auth/google/callback', function () {
-    $user = Socialite::driver('google')->user();
-    echo $user->getId().'<br>';
-    echo $user->getNickname().'<br>';
-    echo $user->getName().'<br>';
-    echo $user->getEmail().'<br>';
-    echo $user->getAvatar().'<br>';
-});
+    Route::get('facebook', function () {
+        return Socialite::driver('facebook')->redirect();
+    })->name('facebook');
 
-Route::get('/auth/github', function () {
-    return Socialite::driver('github')->redirect();
-});
+    Route::get('facebook/callback', [LoginController::class, 'facebookCallback']);
 
-Route::get('auth/github/callback', function () {
-    $user = Socialite::driver('github')->user();
-    dd($user);
-    echo $user->getId().'<br>';
-    echo $user->getNickname().'<br>';
-    echo $user->getName().'<br>';
-    echo $user->getEmail().'<br>';
-    echo $user->getAvatar().'<br>';
+
+    Route::get('google', function () {
+        return Socialite::driver('google')->redirect();
+    })->name('google');
+
+    Route::get('google/callback',[LoginController::class, 'googleCallback']);
+
+
+    Route::get('github', function () {
+        return Socialite::driver('github')->redirect();
+    })->name('github');
+
+    Route::get('github/callback', [LoginController::class, 'githubCallback']);
 });
