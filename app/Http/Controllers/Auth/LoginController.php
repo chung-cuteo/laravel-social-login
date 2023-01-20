@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\User;
 use App\Http\Controllers\Auth\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 class LoginController extends Controller
 {
     /*
@@ -54,6 +55,7 @@ class LoginController extends Controller
             $user->name = $userFacebook->getName();
             $user->email = $userFacebook->getEmail();
             $user->provider_id = $providerId;
+            $user->password = Str::random(8);
             $user->save();
         }
 
