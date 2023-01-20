@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Auth\Socialite;
+use App\Models\User;
+use App\Http\Controllers\Auth\Auth;
 
 class LoginController extends Controller
 {
@@ -40,16 +42,29 @@ class LoginController extends Controller
     }
 
 
-    public function facebookCallback() {
-        $user = Socialite::driver('facebook')->user();
-        echo $user->getId() . '<br>';
-        echo $user->getNickname() . '<br>';
-        echo $user->getName() . '<br>';
-        echo $user->getEmail() . '<br>';
-        echo $user->getAvatar() . '<br>';
+    public function facebookCallback()
+    {
+        $userFacebook = Socialite::driver('facebook')->user();
+        $providerId = $userFacebook->getId();
+        $provider = 'facebook';
+
+        $user = User::where('provider', $provider)->where('provider_id', $providerId)->first();
+
+        if (!$user) {
+            $user = new User();
+            $user->name = $userFacebook->getName();
+            $user->email = $userFacebook->getEmail();
+            $user->provider_id = $providerId;
+            $user->save();
+        }
+
+        $userId = $user->id;
+
+        Auth::loginUsingId($userId);
     }
 
-    public function googleCallback() {
+    public function googleCallback()
+    {
         $user = Socialite::driver('google')->user();
         echo $user->getId() . '<br>';
         echo $user->getNickname() . '<br>';
@@ -58,7 +73,8 @@ class LoginController extends Controller
         echo $user->getAvatar() . '<br>';
     }
 
-    public function githubCallback() {
+    public function githubCallback()
+    {
         $user = Socialite::driver('github')->user();
         echo $user->getId() . '<br>';
         echo $user->getNickname() . '<br>';
