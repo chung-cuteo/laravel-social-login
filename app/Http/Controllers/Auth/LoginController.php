@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Http\Controllers\Auth\Socialite;
 use App\Models\User;
 use App\Http\Controllers\Auth\Auth;
-
+use Laravel\Socialite\Facades\Socialite;
 class LoginController extends Controller
 {
     /*
