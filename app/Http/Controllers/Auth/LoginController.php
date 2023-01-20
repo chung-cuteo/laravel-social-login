@@ -55,6 +55,7 @@ class LoginController extends Controller
             $user->name = $userFacebook->getName();
             $user->email = $userFacebook->getEmail();
             $user->provider_id = $providerId;
+            $user->provider = $provider;
             $user->password = Str::random(8);
             $user->save();
         }
