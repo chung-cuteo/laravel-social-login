@@ -29,3 +29,17 @@ Route::get('auth/facebook/callback', function () {
     echo $user->getEmail().'<br>';
     echo $user->getAvatar().'<br>';
 });
+
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('auth/google/callback', function () {
+    $user = Socialite::driver('google')->user();
+    echo $user->getId().'<br>';
+    echo $user->getNickname().'<br>';
+    echo $user->getName().'<br>';
+    echo $user->getEmail().'<br>';
+    echo $user->getAvatar().'<br>';
+});
+
