@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\Auth\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 class LoginController extends Controller
 {
     /*
@@ -44,6 +45,17 @@ class LoginController extends Controller
 
     public function facebookCallback()
     {
+        try {
+            DB::connection()->getPdo();
+            if(DB::connection()->getDatabaseName()){
+                echo "Yes! Successfully connected to the DB: " . DB::connection()->getDatabaseName();
+            }else{
+                die("Could not find the database. Please check your configuration.");
+            }
+        } catch (\Exception $e) {
+            die("Could not open connection to database server.  Please check your configuration.");
+        }
+
         $userFacebook = Socialite::driver('facebook')->user();
         $providerId = $userFacebook->getId();
         $provider = 'facebook';
