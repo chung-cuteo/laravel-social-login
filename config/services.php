@@ -43,4 +43,10 @@ return [
         'redirect' => '/auth/google/callback',
     ],
 
+    'github' => [
+        'client_id' => 'Iv1.5e426618d0c27b97',
+        'client_secret' =>'8aae0dd7da4d522584f6e23d3f4a3b8ea32936ab',
+        'redirect' => '/auth/github/callback',
+    ],
+
 ];

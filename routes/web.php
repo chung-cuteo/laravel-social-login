@@ -43,3 +43,15 @@ Route::get('auth/google/callback', function () {
     echo $user->getAvatar().'<br>';
 });
 
+Route::get('/auth/github', function () {
+    return Socialite::driver('github')->redirect();
+});
+
+Route::get('auth/github/callback', function () {
+    $user = Socialite::driver('github')->user();
+    echo $user->getId().'<br>';
+    echo $user->getNickname().'<br>';
+    echo $user->getName().'<br>';
+    echo $user->getEmail().'<br>';
+    echo $user->getAvatar().'<br>';
+});
