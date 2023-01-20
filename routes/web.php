@@ -23,7 +23,9 @@ Route::get('/auth/facebook', function () {
 
 Route::get('auth/facebook/callback', function () {
     $user = Socialite::driver('facebook')->user();
-    dd($user);
-
-    return 'callback facebook';
+    echo $user->getId().'<br>';
+    echo $user->getNickname().'<br>';
+    echo $user->getName().'<br>';
+    echo $user->getEmail().'<br>';
+    echo $user->getAvatar().'<br>';
 });
